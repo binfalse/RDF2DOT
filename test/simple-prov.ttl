@@ -8,6 +8,6 @@ a prov:Entity.
 :b a prov:Agent, foaf:Person;
 foaf:name "some body".
 
-:c a prov:Avtivity;
+:c a prov:Activity;
 prov:used :a.
 

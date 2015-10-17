@@ -22,6 +22,12 @@ import de.binfalse.rdf2dot.RdfDotConverter;
 public class ConverterTest
 {
 	Pattern dotConnection = Pattern.compile (" -> ");
+	Pattern provActivity = Pattern.compile ("\\[ (shape=\"polygon\"\\s*|sides=\"4\"\\s*|color=\"#000000\"\\s*|label=\"[^\"]\"\\s*|style=\"filled\"\\s*|fillcolor=\"#9FB1FC\"\\s*){6}\\];");
+	Pattern provAgent = Pattern.compile ("\\[ (shape=\"house\"\\s*|color=\"#000000\"\\s*|label=\"[^\"]\"\\s*|style=\"filled\"\\s*|fillcolor=\"#FDB266\"\\s*){5}\\];");
+	Pattern provEntity = Pattern.compile ("\\[ (shape=\"ellipse\"\\s*|color=\"#000000\"\\s*|label=\"[^\"]\"\\s*|style=\"filled\"\\s*|fillcolor=\"#FFFC87\"\\s*){5}\\];");
+	Pattern provAssociatedWith = Pattern.compile ("\"[^\"]\" -> \"[^\"]\" \\[ label=\"prov:associatedWith\" \\];");
+	Pattern provUsed = Pattern.compile ("\"[^\"]\" -> \"[^\"]\" \\[ label=\"prov:used\" \\];");
+	
 	
 	
 	/**
@@ -49,15 +55,6 @@ public class ConverterTest
 		}
 	}
 	
-	private int findPattern (Pattern p, String s)
-	{
-		int n = 0;
-		Matcher m = p.matcher (s);
-		while (m.find ())
-			n++;
-		return n;
-	}
-	
 	
 	
 	
@@ -73,17 +70,17 @@ public class ConverterTest
 			tmp.delete ();
 			new RdfDotConverter ().convert ("test/simple-prov.ttl", tmp.getAbsolutePath (), "LR");
 			String contents = GeneralTools.fileToString (tmp);
+			System.out.println (contents);
 			
 			assertTrue ("expected to obtain a LR graph", contents.contains ("rankdir=\"LR\""));
 			assertEquals ("expected to receive two ordinary connections and three attribute connections", 5, findPattern (dotConnection, contents));
 			
-			assertTrue ("expected to obtain a prov:associatedWith connection", contents.contains (" [ label=\"prov:associatedWith\" ]"));
-			assertTrue ("expected to obtain a prov:used connection", contents.contains (" [ label=\"prov:used\" ]"));
-			assertTrue ("expected to obtain a house-agent", contents.contains (" [ shape=\"house\" "));
-			assertTrue ("expected to obtain a prov entity shape", contents.contains (" [ shape=\"house\" "));
-			assertTrue ("expected to obtain prov entity attributes", contents.contains (" style=\"filled\"  fillcolor=\"#FFFC87\" ]"));
-			assertTrue ("expected to obtain prov activity shape", contents.contains ("[ shape=\"house\" "));
-			assertTrue ("expected to obtain prov activity attributes", contents.contains (" style=\"filled\"  fillcolor=\"#FDB266\" ]"));
+			assertEquals ("expected to obtain a prov:associatedWith connection", 1, findPattern (provAssociatedWith, contents));
+			assertEquals ("expected to obtain a prov:used connection", 1, findPattern (provUsed, contents));
+
+			assertEquals ("expected exactly 1 prov entity", 1, findPattern (provEntity, contents));
+			assertEquals ("expected exactly 1 prov agent", 1, findPattern (provAgent, contents));
+			assertEquals ("expected exactly 1 prov activity", 1, findPattern (provActivity, contents));
 			
 			assertFalse ("didn't expect a file name if speaking about internal stuff", contents.contains (new File ("test/simplegraph-2.ttl").getAbsoluteFile ().getParentFile ().getParentFile ().getAbsolutePath ()));
 			assertFalse ("didn't expect a file name if speaking about internal stuff", contents.contains ("simplegraph"));
@@ -96,4 +93,22 @@ public class ConverterTest
 			fail ("wasn't able to convert simple graph");
 		}
 	}
+	
+	
+	
+
+	
+	private int findPattern (Pattern p, String s)
+	{
+		int n = 0;
+		Matcher m = p.matcher (s);
+		while (m.find ())
+		{
+			//System.out.println (p + " -> " + m.group ());
+			n++;
+		}
+		return n;
+	}
+	
+	
 }
