@@ -1,0 +1,181 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.binfalse</groupId>
+  <artifactId>rdf2dot</artifactId>
+  <version>0.2</version>
+  <packaging>jar</packaging>
+
+  <name>rdf2dot</name>
+  <url>http://maven.apache.org</url>
+
+    <developers>
+        <developer>
+            <name>Martin Scharm</name>
+            <id>martin</id>
+            <email>mvn@binfalse.de</email>
+            <organization>SEMS project @ University of Rostock</organization>
+            <organizationUrl>http://sems.uni-rostock.de</organizationUrl>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.binfalse</groupId>
+      <artifactId>BFUtils</artifactId>
+      <version>0.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.jena</groupId>
+      <artifactId>apache-jena-libs</artifactId>
+      <type>pom</type>
+      <version>3.0.0</version>
+    </dependency>
+  </dependencies>
+  
+    <distributionManagement>
+        <downloadUrl>http://mvn.sems.uni-rostock.de</downloadUrl>
+        <snapshotRepository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>sems-maven-repository</id>
+            <name>SEMS Maven Release Repository</name>
+            <url>scp://sems.uni-rostock.de:/home/stuff/web/mvn/snapshots/</url>
+            <layout>default</layout>
+        </snapshotRepository>
+
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>sems-maven-repository</id>
+            <name>Enterprise Systems Maven Repository</name>
+            <url>scp://sems.uni-rostock.de:/home/stuff/web/mvn/releases/</url>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <extensions>
+            <!-- enables ssh/scp support for maven deployment -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>1.0-beta-7</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>de.binfalse.rdf2dot.RdfDotConvert</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+	    <resources>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	            <filtering>true</filtering>
+	        </resource>
+	    </resources>
+    </build>
+    <repositories>
+        <repository>
+            <id>sems-maven-repo-releases</id>
+            <name>SEMS Maven repository</name>
+            <url>http://mvn.sems.uni-rostock.de/releases/</url>
+        </repository>
+        <repository>
+            <id>sems-maven-repo-snapshots</id>
+            <name>SEMS Maven repository</name>
+            <url>http://mvn.sems.uni-rostock.de/snapshots/</url>
+        </repository>
+        <repository>
+            <id>apache.snapshots</id>
+            <name>Apache Snapshot Repository</name>
+            <url>http://repository.apache.org/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <profiles>
+        <!-- deployment profile -->
+        <profile>
+            <id>release</id>
+            <!-- build plugin configuration for the deploy -->
+            <!-- not necessary to always nclude the sources and javadocs -->
+            <build>
+                <plugins>
+                    <!-- attach sources -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+
+                        <configuration>
+                            <attach>true</attach>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- attach javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
