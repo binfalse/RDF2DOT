@@ -1,0 +1,8 @@
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix : <#> .
+
+:a prov:associatedWith :b;
+a prov:Entity.
+
+:b a prov:Agent.
+
