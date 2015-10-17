@@ -65,6 +65,9 @@ public class ConverterTest
 			assertTrue ("expected to obtain a prov:associatedWith connection", contents.contains (" [ label=\"prov:associatedWith\" ]"));
 			assertTrue ("expected to obtain a house-agent", contents.contains (" [ shape=\"house\" "));
 			assertTrue ("expected to obtain a prov entity", contents.contains (" style=\"filled\"  fillcolor=\"#FFFC87\" ]"));
+			assertFalse ("didn't expect a file name if speaking about internal stuff", contents.contains (new File ("test/simplegraph-2.ttl").getAbsoluteFile ().getParentFile ().getParentFile ().getAbsolutePath ()));
+			assertFalse ("didn't expect a file name if speaking about internal stuff", contents.contains ("simplegraph"));
+			assertFalse ("didn't expect a file name if speaking about internal stuff", contents.contains (tmp.getName ()));
 			tmp.delete ();
 		}
 		catch (IOException e)

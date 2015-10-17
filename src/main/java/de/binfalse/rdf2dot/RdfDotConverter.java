@@ -35,8 +35,8 @@ public class RdfDotConverter
     
     public void convert (String inputFileName, String outputFileName, String rankDir) throws IOException
     {
-    	File in = new File (inputFileName);
-    	File out = new File (outputFileName);
+    	File in = new File (inputFileName).getAbsoluteFile ();
+    	File out = new File (outputFileName).getAbsoluteFile ();
     	
     	if (!in.exists () || !in.canRead ())
     	{
@@ -47,6 +47,8 @@ public class RdfDotConverter
     	{
     		throw new IOException ("file " + out + " exists. won't overwrite.");
     	}
+    	
+    	inputFileName = in.getAbsolutePath ();
     	
         Model model = ModelFactory.createDefaultModel();
         
