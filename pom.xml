@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>de.binfalse</groupId>
-  <artifactId>rdf2dot</artifactId>
-  <version>0.2</version>
-  <packaging>jar</packaging>
+    <groupId>de.binfalse</groupId>
+    <artifactId>rdf2dot</artifactId>
+    <version>0.2</version>
+    <packaging>jar</packaging>
 
-  <name>rdf2dot</name>
-  <url>http://maven.apache.org</url>
+    <name>rdf2dot</name>
+    <url>http://maven.apache.org</url>
 
     <developers>
         <developer>
@@ -23,30 +23,30 @@
         </developer>
     </developers>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.binfalse</groupId>
-      <artifactId>BFUtils</artifactId>
-      <version>0.4.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jena</groupId>
-      <artifactId>apache-jena-libs</artifactId>
-      <type>pom</type>
-      <version>3.0.0</version>
-    </dependency>
-  </dependencies>
-  
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.binfalse</groupId>
+            <artifactId>BFUtils</artifactId>
+            <version>0.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>apache-jena-libs</artifactId>
+            <type>pom</type>
+            <version>3.0.0</version>
+        </dependency>
+    </dependencies>
+
     <distributionManagement>
         <downloadUrl>http://mvn.sems.uni-rostock.de</downloadUrl>
         <snapshotRepository>
@@ -108,12 +108,12 @@
                 </executions>
             </plugin>
         </plugins>
-	    <resources>
-	        <resource>
-	            <directory>src/main/resources</directory>
-	            <filtering>true</filtering>
-	        </resource>
-	    </resources>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
     <repositories>
         <repository>
