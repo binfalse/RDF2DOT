@@ -1,5 +1,6 @@
 @prefix prov: <http://www.w3.org/ns/prov#>.
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix pav: <http://purl.org/pav/>.
 @prefix : <#> .
 
 :a prov:associatedWith :b;
@@ -10,4 +11,8 @@ foaf:name "some body".
 
 :c a prov:Activity;
 prov:used :a.
+
+
+
+:a pav:retrievedFrom <http://binfalse.de/#some-url> .
 
