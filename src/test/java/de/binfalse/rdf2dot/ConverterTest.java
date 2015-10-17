@@ -85,6 +85,11 @@ public class ConverterTest
 			assertFalse ("didn't expect a file name if speaking about internal stuff", contents.contains (new File ("test/simplegraph-2.ttl").getAbsoluteFile ().getParentFile ().getParentFile ().getAbsolutePath ()));
 			assertFalse ("didn't expect a file name if speaking about internal stuff", contents.contains ("simplegraph"));
 			assertFalse ("didn't expect a file name if speaking about internal stuff", contents.contains (tmp.getName ()));
+			
+
+			assertTrue ("expected a foaf:name", contents.contains ("<TD align=\"left\">foaf:name</TD>"));
+			assertTrue ("expected a foaf:name", contents.contains ("<TD align=\"left\">some body</TD>"));
+			
 			tmp.delete ();
 		}
 		catch (IOException e)
