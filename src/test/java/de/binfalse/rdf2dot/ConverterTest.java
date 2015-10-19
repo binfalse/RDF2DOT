@@ -72,7 +72,7 @@ public class ConverterTest
 			tmp.delete ();
 			new RdfDotConverter ().convert ("test/simple-prov.ttl", tmp.getAbsolutePath (), "LR");
 			String contents = GeneralTools.fileToString (tmp);
-			System.out.println (contents);
+			//System.out.println (contents);
 			
 			assertTrue ("expected to obtain a LR graph", contents.contains ("rankdir=\"LR\""));
 			assertEquals ("expected to receive three ordinary connections and three attribute connections", 6, findPattern (dotConnection, contents));
@@ -113,7 +113,6 @@ public class ConverterTest
 		Matcher m = p.matcher (s);
 		while (m.find ())
 		{
-			//System.out.println (p + " -> " + m.group ());
 			n++;
 		}
 		return n;

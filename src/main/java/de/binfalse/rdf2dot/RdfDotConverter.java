@@ -52,7 +52,7 @@ public class RdfDotConverter
     	
         Model model = ModelFactory.createDefaultModel();
         
-       model.read(inputFileName, "TURTLE");
+       model.read(inputFileName);
        
        RdfModel rdfModel = new RdfModel (model, inputFileName);
        
