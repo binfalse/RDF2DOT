@@ -29,7 +29,34 @@ public class ConverterTest
 	
 	Pattern provAssociatedWith = Pattern.compile ("\"[^\"]\" -> \"[^\"]\" \\[ label=\"prov:associatedWith\" \\];");
 	Pattern provUsed = Pattern.compile ("\"[^\"]\" -> \"[^\"]\" \\[ label=\"prov:used\" \\];");
+
 	
+	
+	/**
+	 * Simple test.
+	 */
+	@Test
+	public void simpleTestXml ()
+	{
+		try
+		{
+			File tmp = File.createTempFile ("Rdf2Dot-test-", "dot");
+			tmp.delete ();
+			new RdfDotConverter ().convert ("test/simplegraph.xml", tmp.getAbsolutePath (), "BT");
+			String contents = GeneralTools.fileToString (tmp);
+//			System.out.println (contents);
+			
+			assertTrue ("expected to obtain a BT graph", contents.contains ("rankdir=\"BT\""));
+			assertEquals ("expected to receive a single connection", 1, findPattern (dotConnection, contents));
+			assertEquals ("expected to get a node labeled 'a'", 1, findPattern (Pattern.compile ("\"a\" \\[ [^\\]]*label=\"a\"[^\\]]* \\]"), contents));
+			tmp.delete ();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			fail ("wasn't able to convert simple graph");
+		}
+	}
 	
 	
 	/**
